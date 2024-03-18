@@ -7,6 +7,8 @@ import Menu from "../pages/Menu/Menu/Menu";
 import Order from "../pages/Order/Order/Order";
 import LogIn from "../pages/Login/LogIn";
 import SignUP from "../pages/SignUp/SignUP";
+import PrivateRoute from "./PrivateRoute";
+import Screct from "../pages/Shared/Screct/Screct";
 
 
   export const router = createBrowserRouter([
@@ -33,6 +35,10 @@ import SignUP from "../pages/SignUp/SignUP";
         {
            path: '/signup',
            element: <SignUP/>
+        },
+        {
+          path: '/screct',
+          element : <PrivateRoute><Screct/></PrivateRoute>
         }
        
       ]
