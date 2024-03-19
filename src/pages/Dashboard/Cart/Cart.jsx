@@ -30,10 +30,7 @@ const Cart = () => {
                     icon: "success"
                   });
             }
-            // console.log(res);
-            // Optionally, you can reload the cart after deletion
-            // Reload the cart data
-            // window.location.reload();
+           
           })
           .catch(error => {
             console.error("Error deleting cart:", error);

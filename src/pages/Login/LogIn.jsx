@@ -8,11 +8,11 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
-import { stringify } from 'flatted';
+import SicialLogIn from "../../components/SocialLogIn/SicialLogIn";
 
 const LogIn = () => {
   const [disabled, setDisabled] = useState(true);
-  const { signIn } = useContext(AuthContext);
+  const { signIn,  } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -63,6 +63,7 @@ const LogIn = () => {
       setDisabled(true);
     }
   };
+
 
   return (
     <>
@@ -139,6 +140,9 @@ const LogIn = () => {
                 New Here? <Link to={"/signup"}>Create an Account</Link>
               </small>
             </p>
+            <div  className="mx-auto p-3">
+              <SicialLogIn></SicialLogIn>
+            </div>
           </div>
         </div>
       </div>

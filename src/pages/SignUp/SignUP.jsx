@@ -4,10 +4,13 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SicialLogIn from "../../components/SocialLogIn/SicialLogIn";
 
 const SignUP = () => {
-  const {createUser,updateUserProfile} = useContext(AuthContext)
-  const navigate = useNavigate()
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -16,43 +19,51 @@ const SignUP = () => {
     reset,
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
-    createUser(data.email,data.password,data.photoURL)
-    .then(res => {
-      updateUserProfile(data.name,data.photoURL)
-      .then(() => {
-       console.log('profile updated');
-       Swal.fire({
-        title: "Profile update successfully",
-        showClass: {
-          popup: `
-            animate__animated
-            animate__fadeInUp
-            animate__faster
-          `,
-        },
-        hideClass: {
-          popup: `
-            animate__animated
-            animate__fadeOutDown
-            animate__faster
-          `,
-        },
+    // console.log(data);
+    createUser(data.email, data.password, data.photoURL)
+      .then((res) => {
+        updateUserProfile(data.name, data.photoURL)
+          .then(() => {
+            //  console.log('profile updated');
+            const userInfo = {
+              name: data.name,
+              email: data.email,
+            };
+            axiosPublic.post("/users", userInfo).then((res) => {
+              if (res.data.insertedId) {
+                console.log('user data saved');
+                reset();
+                Swal.fire({
+                  title: "Profile update successfully",
+                  showClass: {
+                    popup: `
+               animate__animated
+               animate__fadeInUp
+               animate__faster
+             `,
+                  },
+                  hideClass: {
+                    popup: `
+               animate__animated
+               animate__fadeOutDown
+               animate__faster
+             `,
+                  },
+                });
+                navigate("/");
+              }
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        console.log(res.user);
+      })
+      .then((err) => {
+        console.log(err);
       });
-      navigate('/')
-       reset();
-      }).catch((error) => {
-        console.log(error);
-      });
-      console.log(res.user);
-    })
-    .then(err => {
-      console.log(err);
-    })
-
 
     reset();
-
   };
   //  console.log(watch("example"))
   return (
@@ -164,6 +175,9 @@ const SignUP = () => {
                 Have Account <Link to={"/login"}>Login</Link>
               </small>
             </p>
+            <div className="mx-auto m-4">
+              <SicialLogIn></SicialLogIn>
+            </div>
           </div>
         </div>
       </div>
