@@ -9,6 +9,8 @@ import LogIn from "../pages/Login/LogIn";
 import SignUP from "../pages/SignUp/SignUP";
 import PrivateRoute from "./PrivateRoute";
 import Screct from "../pages/Shared/Screct/Screct";
+import Dashboard from "../Layout/Dashboard";
+import Cart from "../pages/Dashboard/Cart/Cart";
 
 
   export const router = createBrowserRouter([
@@ -43,4 +45,15 @@ import Screct from "../pages/Shared/Screct/Screct";
        
       ]
     },
+    {
+      path:'dashboard',
+      element: <Dashboard/>,
+      children:[
+        {
+          path: 'cart',
+          element: <Cart/>
+        }
+      ]
+    }
+
   ]);
